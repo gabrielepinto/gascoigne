@@ -3,6 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.lines import Line2D
 from matplotlib.patches import Rectangle
+def printer(x):
+    print(x)
+    return None
 
 def create_df(list_of_models,model_names="none"):
     data=pd.DataFrame()
