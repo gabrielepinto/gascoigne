@@ -2,4 +2,4 @@
 setup.cfg
 setup.py
 gascoigne\__init__.py
-gascoigne\regcoeffplot.py
+gascoigne\regplot.py

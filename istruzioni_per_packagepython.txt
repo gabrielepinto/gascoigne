@@ -21,9 +21,12 @@ how to update ?
 6) click on "update release"
 7) go to source code and copy link localiton tar.gz
 ex: https://github.com/gabrielepinto/gascoigne/archive/0.2.tar.gz 
-8) if the url is different copy this url in the setup file and sync again the folder. if it is the same continue to the next step. if the version is changed, make sure to change also the version number in the setup file.
+in the setup file "download url".
+8) if the version is changed, make sure to change also the version number in the setup file.
 9) open the anaconda
 10) go to the folder
-11) type python -m twine upload dist/*
+11) type: python setup.py sdist
+12 type:  python -m twine upload dist/*
 insert username gabrielepinto and password
-12) if the version is the same, pip uninstall and pip install, otherwise pip install package --upgrade
+12) to install the new version pip install packagenam==version (or in alternative uninstall and re-install
+13) delete older version on pipy to avoid downloading older version

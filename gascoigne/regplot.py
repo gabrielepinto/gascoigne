@@ -27,34 +27,68 @@ def create_df(list_of_models,model_names="none"):
         i+=1
     return data
 
-def coeff_plot(data,colors="standard",marker_colors="standard",bar_colors="standard",linewidth=2,markersize=8,marker="^",legend=True,smf=True,orientation="horizontal"):
+
+
+def coeff_plot(data,selected_var=None,show_intercept=True,fontsize=12,colors="standard",marker_colors="standard",bar_colors="standard",linewidth=2,markersize=8,marker="^",legend=True,smf=True,orientation="horizontal",
+              axis_title=None,figsize=None,xlabel="variables",ylabel="coefficient"):
 
     """
     data: a pandas dataframe with four columns [coef,err,model,varname]
-
+    show_intercept: show or not intercept coefficient
+    
+    fontsize: fontsize of the text in the figures
     colors: a unique or a list of colors for bar and markers
     marker_colors: a list of colors for markers
     bar_colors: a list of colors for bar
-
+    selected_var:a list-array with the names of the specific variables you want to show or the order
+    
     linewidth:width of the bar
     markersize: size of the marker
     marker: type of marker (triangle, point, etc... see: https://matplotlib.org/3.3.3/api/markers_api.html)
     color_line: a unqque or a list of colors for bar
     legend: show legend or not
+    axis_title: title of the figure, default is none
+    figsize: a tuple (xsize,ysize) for editing the size of the figure. default is 5,10
+    xlabel: label of x-axis
+    ylabel: label of y-axis
     """
+
+
+        
+        
     ### shape data
     if smf==False:
         if (data.columns[0:4]!=["coeff","err","model","varname"]).any()==False:
             raise Exception("columns of the dataframe are not correct. please make sure the dataframe has columns named coef, err, model and varname") 
     else:
         data=create_df(data)
-
+    
+    
+    ## dimension 
+    if figsize==None:
+        figsize=(10,5)
+        
     ## start plotting
-    fig,axs=plt.subplots(figsize=(10,5))
+    fig,axs=plt.subplots(figsize=figsize)
+    
+    
+    if show_intercept!=False:
+        data.drop((data.loc[data["varname"]=="Intercept"]).index,axis=0,inplace=True)
+    
+    if selected_var!=None:
+        sorter=selected_var
+        data.drop((~data["varname"].isin(sorter)).index,axis=0,inplace=True)
+        # Create the dictionary that defines the order for sorting
+        sorterIndex = dict(zip(sorter, range(len(sorter))))
+        # Generate a rank column that will be used to sort
+        # the dataframe numerically
+        data['var_rank'] = data['varname'].map(sorterIndex)
 
+        data.sort_values(["model","var_rank"],ascending=[True,True],inplace=True)
+    
     ### this is to have the name of the variable
     var_to_show=list(data["varname"].unique())
-
+    
     ## index unique combinations of variables
     indx=data.loc[data["varname"].isin(var_to_show),"varname"].drop_duplicates().index
 
@@ -65,18 +99,32 @@ def coeff_plot(data,colors="standard",marker_colors="standard",bar_colors="stand
         data.loc[indx,:].plot(x="coef",y="varname",kind="scatter",ax=axs,color="none")
 
 
-    ### axis limits of the plot
+    ### give a 10% margin to axis limits of the plot
     data["coef"]+data["err"]
     ax_min=(data["coef"]-data["err"]).min()*1.10
     ax_max=(data["coef"]+data["err"]).max()*1.10
+    
+    ### set label name
+    axs.set_xlabel(xlabel)
+    axs.set_ylabel(ylabel)
 
+    
     if orientation=="horizontal":
         axs.set_ylim(ax_min,ax_max)
+        ## in case ax is rotated and label not specified, invert the names
+        if ((xlabel=="variables")&(ylabel=="coefficient"))==True:
+            axs.set_xlabel(ylabel)
+            axs.set_ylabel(xlabel)
     else:
         axs.set_xlim(ax_min,ax_max)
 
 
-
+    
+    ## titles and labels
+    if axis_title!=None:
+        axs.set_title(axis_title)
+        
+        
     ### collections of model
     list_of_model=[]
     for model in data["model"].unique():

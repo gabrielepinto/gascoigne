@@ -1,5 +1,13 @@
-# Example Package
+# The Gascoigne package
 
-This is a simple example package. You can use
-[Github-flavored Markdown](https://guides.github.com/features/mastering-markdown/)
-to write your content.
+To see how to use the regression coefficient plot function 
+
+## installation
+pip install gascoigne
+
+## usage
+from gascoigne import regplot
+
+regplot.coeff_plot(a model or a list of model)
+
+for example see here [see the notebook example here]()
