@@ -11,7 +11,7 @@ setuptools.setup(
     description="a set of useful tools for python. at the moment it includes: coeffplot a tool to make coefficient regression plot with python",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/pypa/sampleproject",
+    url="https://github.com/gabrielepinto/gascoigne",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
