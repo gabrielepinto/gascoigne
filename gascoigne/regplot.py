@@ -132,28 +132,30 @@ def coeff_plot(data,selected_var=None,show_intercept=True,fontsize=12,colors="st
     for model in data["model"].unique():
         list_of_model.append(data.loc[data["model"]==model,:])
 
-    ### list_of_colors
-    if (colors=="standard")&(marker_colors=="standard")&(bar_colors=="standard"):
-        marker_colors=['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']
-        bar_colors=['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']
+
+    std_marker_colors=['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']
+    std_bar_colors=['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928'] 
+
+    if colors!="standard":
+        if len([colors])==1:
+            marker_colors=[colors]*len(list_of_model)
+            bar_colors=[colors]*len(list_of_model)
+        else:
+            marker_colors=colors
+            bar_colors=colors
+
+    if marker_colors!="standard":
+        if len([marker_colors])==1:
+            marker_colors=[marker_colors]*len(list_of_model)
     else:
-        if colors!="standard":
-            if len([colors])==1:
-                marker_colors=[colors]*len(list_of_model)
-                bar_colors=[colors]*len(list_of_model)
-
-        if marker_colors!="standard":
-            if bar_colors=="standard":
-                bar_colors=["black"]*len(list_of_model)
-            if len([marker_colors])==1:
-                marker_colors=[marker_colors]*len(list_of_model)
-
-        if bar_colors!="standard":
-            if marker_colors=="standard":
-                marker_colors=["black"]*len(list_of_model)
-            if len([bar_colors])==1:
-                bar_colors=[bar_colors]*len(list_of_model)
-
+        marker_colors=std_marker_colors
+        
+    if bar_colors!="standard":
+        if len([bar_colors])==1:
+            bar_colors=[bar_colors]*len(list_of_model)
+    else:
+        bar_colors=std_bar_colors
+        
     ## name of model
     list_name_model=data["model"].unique()
 
@@ -192,7 +194,7 @@ def coeff_plot(data,selected_var=None,show_intercept=True,fontsize=12,colors="st
                 axs.plot(x_position,row["coef"], 
                          color=mrk_color, 
                          marker=marker, 
-                         linestyle='dashed',linewidth=2, markersize=8)  
+                         linestyle='dashed',linewidth=linewidth, markersize=markersize)  
             else:
                 ## plot bar
                 axs.hlines(y=x_position,
@@ -205,7 +207,7 @@ def coeff_plot(data,selected_var=None,show_intercept=True,fontsize=12,colors="st
                 axs.plot(row["coef"],x_position, 
                          color=mrk_color, 
                          marker=marker, 
-                         linestyle='dashed',linewidth=2, markersize=8)  
+                         linestyle='dashed',linewidth=linewidth, markersize=markersize)  
                 
         ### update the counter
         variable_count.loc[variable_count["varname"].isin(model["varname"].unique()),"counter"]+=1
