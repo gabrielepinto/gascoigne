@@ -1,1 +1,1 @@
-from gascoigne.regcoeffplot import create_df,coeff_plot,printer
+from gascoigne import regplot 
