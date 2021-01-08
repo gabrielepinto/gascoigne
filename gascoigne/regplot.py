@@ -29,6 +29,7 @@ def create_df(list_of_models,model_names="none"):
 
 
 
+
 def coeff_plot(data,selected_var=None,show_intercept=True,fontsize=12,colors="standard",marker_colors="standard",bar_colors="standard",linewidth=2,markersize=8,marker="^",legend=True,smf=True,orientation="horizontal",
               axis_title=None,figsize=None,xlabel="variables",ylabel="coefficient"):
 
@@ -75,9 +76,10 @@ def coeff_plot(data,selected_var=None,show_intercept=True,fontsize=12,colors="st
     if show_intercept!=False:
         data.drop((data.loc[data["varname"]=="Intercept"]).index,axis=0,inplace=True)
     
+    data.reset_index(inplace=True,drop=True)
     if selected_var!=None:
         sorter=selected_var
-        data.drop((~data["varname"].isin(sorter)).index,axis=0,inplace=True)
+        data.drop(data.loc[~data["varname"].isin(sorter),:].index,axis=0,inplace=True)
         # Create the dictionary that defines the order for sorting
         sorterIndex = dict(zip(sorter, range(len(sorter))))
         # Generate a rank column that will be used to sort
@@ -101,14 +103,14 @@ def coeff_plot(data,selected_var=None,show_intercept=True,fontsize=12,colors="st
 
     ### give a 10% margin to axis limits of the plot
     data["coef"]+data["err"]
-    ax_min=(data["coef"]-data["err"]).min()*1.10
-    ax_max=(data["coef"]+data["err"]).max()*1.10
+    ax_min=np.round((data["coef"]-data["err"]).min()*1.10,4)
+    ax_max=np.round((data["coef"]+data["err"]).max()*1.10,4)
+    
     
     ### set label name
     axs.set_xlabel(xlabel)
     axs.set_ylabel(ylabel)
 
-    
     if orientation=="horizontal":
         axs.set_ylim(ax_min,ax_max)
         ## in case ax is rotated and label not specified, invert the names
