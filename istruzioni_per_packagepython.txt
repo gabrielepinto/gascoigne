@@ -27,6 +27,7 @@ in the setup file "download url".
 10) go to the folder
 11) type: python setup.py sdist
 12 type:  python -m twine upload dist/*
+(alternatively python-m twine upload dist/namefile.tar.gz
 insert username gabrielepinto and password
 12) to install the new version pip install packagenam==version (or in alternative uninstall and re-install
 13) delete older version on pipy to avoid downloading older version
