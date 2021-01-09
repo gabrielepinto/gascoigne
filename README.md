@@ -1,6 +1,8 @@
 # The Gascoigne package
+a miscellaneous package of functions for python visualization.
+to give feedback or contribute please open a github issue.
 
-To see how to use the regression coefficient plot function 
+how to use the regression coefficient plot function: 
 
 ## installation
 pip install gascoigne
