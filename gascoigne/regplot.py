@@ -90,7 +90,7 @@ def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Interc
         # the dataframe numerically
         data['var_rank'] = data['varname'].map(sorterIndex)
 
-        data=data.sort_values(["model","var_rank"],ascending=[True,True],inplace=True)
+        data=data.sort_values(["model","var_rank"],ascending=[True,True]).copy()
     
     ### this is to have the name of the variable
     var_to_show=list(data["varname"].unique())
