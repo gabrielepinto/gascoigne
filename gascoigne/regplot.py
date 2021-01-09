@@ -30,13 +30,14 @@ def create_df(list_of_models,model_names="none"):
 
 
 
-def coeff_plot(data,selected_var=None,show_intercept=True,fontsize=12,colors="standard",marker_colors="standard",bar_colors="standard",linewidth=2,markersize=8,marker="^",legend=True,smf=True,orientation="horizontal",
+def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Intercept",fontsize=12,colors="standard",marker_colors="standard",bar_colors="standard",linewidth=2,markersize=8,marker="^",legend=True,smf=True,orientation="horizontal",
               axis_title=None,figsize=None,xlabel="variables",ylabel="coefficient"):
 
     """
     data: a pandas dataframe with four columns [coef,err,model,varname]
     show_intercept: show or not intercept coefficient
     
+    intercept_name: name of the intercept
     fontsize: fontsize of the text in the figures
     colors: a unique or a list of colors for bar and markers
     marker_colors: a list of colors for markers
@@ -59,12 +60,15 @@ def coeff_plot(data,selected_var=None,show_intercept=True,fontsize=12,colors="st
         
     ### shape data
     if smf==False:
-        if (data.columns[0:4]!=["coeff","err","model","varname"]).any()==False:
-            raise Exception("columns of the dataframe are not correct. please make sure the dataframe has columns named coef, err, model and varname") 
+        if {"coef","model","varname","err"}.issubset(set(data.columns))==False:
+            raise Exception("columns of the dataframe are not correct. please make sure the dataframe has columns named [coef, err, model,varname]") 
     else:
+        ### shape data
         data=create_df(data)
     
-    
+    ### order variable and model
+    data.sort_values(["varname","model"],inplace=True,ascending=True)
+
     ## dimension 
     if figsize==None:
         figsize=(10,5)
@@ -74,7 +78,7 @@ def coeff_plot(data,selected_var=None,show_intercept=True,fontsize=12,colors="st
     
     
     if show_intercept!=False:
-        data.drop((data.loc[data["varname"]=="Intercept"]).index,axis=0,inplace=True)
+        data.drop((data.loc[data["varname"]==intercept_name]).index,axis=0,inplace=True)
     
     data.reset_index(inplace=True,drop=True)
     if selected_var!=None:
@@ -86,7 +90,7 @@ def coeff_plot(data,selected_var=None,show_intercept=True,fontsize=12,colors="st
         # the dataframe numerically
         data['var_rank'] = data['varname'].map(sorterIndex)
 
-        data.sort_values(["model","var_rank"],ascending=[True,True],inplace=True)
+        data=data.sort_values(["model","var_rank"],ascending=[True,True],inplace=True)
     
     ### this is to have the name of the variable
     var_to_show=list(data["varname"].unique())
@@ -218,3 +222,4 @@ def coeff_plot(data,selected_var=None,show_intercept=True,fontsize=12,colors="st
         axs.legend(custom_rectangles,list_name_model);
     plt.tight_layout()
     return None
+
