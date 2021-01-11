@@ -94,6 +94,7 @@ def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Interc
     
     ### this is to have the name of the variable
     var_to_show=list(data["varname"].unique())
+    ### 
     
     ## index unique combinations of variables
     indx=data.loc[data["varname"].isin(var_to_show),"varname"].drop_duplicates().index
@@ -165,6 +166,8 @@ def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Interc
 
     ### positioner
     variable_count=data.groupby("varname",as_index=False)["coef"].count()
+    ## keep the order of variables as given
+    variable_count=variable_count.set_index("varname").reindex(var_to_show).reset_index(drop=False).copy()
     variable_count["even"]=variable_count["coef"]%2
     distance_between=0.1
     positioner=[]
