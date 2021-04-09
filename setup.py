@@ -8,12 +8,19 @@ setup(
   author = 'Gabriele Pinto',                   # Type in your name
   author_email = 'gabriele.pinto@uniroma1.it',      # Type in your E-Mail
   url = 'https://github.com/gabrielepinto/gascoigne',   # Provide either the link to your github or to your website
-  download_url = 'https://github.com/gabrielepinto/gascoigne/archive/v0.5.tar.gz',    # I explain this later on
+  download_url = 'https://github.com/gabrielepinto/gascoigne/archive/v0.1.tar.gz',    # I explain this later on
   keywords = ['coefficient plot', 'regression coefficient', 'coeffplot',"regression coefficient plot"],   # Keywords that define your package best
   install_requires=[            # I get to this in a second
           'matplotlib',
           'numpy',
-          "pandas"
+          "pandas",
+          "json",
+          "pdfplumber",
+          "PIL",
+          "pdf2image",
+          "pytesseract",
+          "langdetect",
+          "language_tool_python"
       ],
   classifiers=[
     'Development Status :: 3 - Alpha',      # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
