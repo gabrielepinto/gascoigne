@@ -14,7 +14,6 @@ setup(
 'matplotlib',
           'numpy',
           "pandas",
-          "json",
           "pdfplumber",
           "PIL",
           "pdf2image",
