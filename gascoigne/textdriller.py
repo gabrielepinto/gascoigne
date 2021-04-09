@@ -157,8 +157,7 @@ class converter():
             ## run checks
             if self.run_checks(text)==False:
                 text=self.pdf_tesseract(url)    
-            if self.run_checks(text)==False:
-                text="error"
+
         
         ## correction
         if correction==True:
