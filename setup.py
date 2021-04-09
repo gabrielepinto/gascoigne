@@ -15,7 +15,6 @@ setup(
           'numpy',
           "pandas",
           "pdfplumber",
-          "PIL",
           "pdf2image",
           "pytesseract",
           "langdetect",
