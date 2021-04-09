@@ -29,7 +29,7 @@ The main advantage of this function is that it can be used to extract text from 
 For example, if it is a scanned paper it will use ocr (quite slow), while if it is a machine-generated pdf it will use the canonical pdf text extractor.
 
 
-![png](example_pdf_extractor.png)
+![png](example_pdf_extractor.PNG)
 
 
 for an example of its usage plese[ see here](https://github.com/gabrielepinto/gascoigne/blob/main/example_textdriller.md)
