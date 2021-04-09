@@ -6,6 +6,7 @@ from pdf2image import convert_from_path
 import pytesseract
 from langdetect import detect_langs
 import language_tool_python
+import requests
 
 
 class converter():
@@ -146,7 +147,11 @@ class converter():
 
         """
         if url.endswith(tuple(self.image_extensions)):
-            text=self.immtex(url)
+            ## it is a web url ?
+            if url.startswith("htt"):
+                text=self.immtex(requests.get(url_image, stream=True).raw)
+            else:
+                text=self.immtex(url)
         else:
 
             lang_to_search=self.language
