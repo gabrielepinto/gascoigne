@@ -149,7 +149,7 @@ class converter():
         if url.endswith(tuple(self.image_extensions)):
             ## it is a web url ?
             if url.startswith("htt"):
-                text=self.immtex(requests.get(url_image, stream=True).raw)
+                text=self.immtex(requests.get(url, stream=True).raw)
             else:
                 text=self.immtex(url)
         else:
