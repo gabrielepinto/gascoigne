@@ -4,7 +4,7 @@ run the comamand
 python setup.py bdist_wheel
 una volta costruito il package
 basta andare nel folder e dal prompt di anaconda fare:
-la username è gabrielepinto
+la username è **
 python -m twine upload dist/*
 
 
@@ -29,6 +29,6 @@ https://github.com/gabrielepinto/gascoigne/archive/refs/tags/v.1.tar.gz
 11) type: python setup.py sdist
 12 type:  python -m twine upload dist/*
 (alternatively python-m twine upload dist/gascoigne-1.1.tar.gz
-insert username gabrielepinto and password
+insert username *** and password
 12) to install the new version pip install packagenam==version (or in alternative uninstall and re-install
 13) delete older version on pipy to avoid downloading older version
