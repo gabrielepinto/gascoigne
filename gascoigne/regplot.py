@@ -31,7 +31,7 @@ def create_df(list_of_models,model_names="none"):
 
 
 def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Intercept",fontsize=12,colors="standard",marker_colors="standard",bar_colors="standard",linewidth=2,markersize=8,marker="^",legend=True,smf=True,orientation="horizontal",
-              axis_title=None,figsize=None,xlabel="variables",ylabel="coefficient"):
+              axis_title=None,figsize=None,xlabel="variables",ylabel="coefficient",manual_axs_lims=None,xticklabels=None,yticklabels=None,return_figure=False):
 
     """
     data: a pandas dataframe with four columns [coef,err,model,varname]
@@ -53,6 +53,10 @@ def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Interc
     figsize: a tuple (xsize,ysize) for editing the size of the figure. default is 5,10
     xlabel: label of x-axis
     ylabel: label of y-axis
+    manual_axs_lims: list of array limits
+    xticklabels: list of xticklabels
+    yticklabels: list of yticklabels
+    return_figure: wether showing directly the fiure or only returning the object
     """
 
 
@@ -82,7 +86,7 @@ def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Interc
     
     data.reset_index(inplace=True,drop=True)
     if selected_var!=None:
-        sorter=selected_var
+        sorter=[selected_var]
         data.drop(data.loc[~data["varname"].isin(sorter),:].index,axis=0,inplace=True)
         # Create the dictionary that defines the order for sorting
         sorterIndex = dict(zip(sorter, range(len(sorter))))
@@ -107,10 +111,13 @@ def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Interc
 
 
     ### give a 10% margin to axis limits of the plot
-    data["coef"]+data["err"]
+    
     ax_min=np.round((data["coef"]-data["err"]).min()*1.10,4)
     ax_max=np.round((data["coef"]+data["err"]).max()*1.10,4)
-    
+
+    if manual_axs_lims!=None:
+        ax_min=manual_axs_lims[0]
+        ax_max=manual_axs_lims[1]
     
     ### set label name
     axs.set_xlabel(xlabel)
@@ -222,7 +229,21 @@ def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Interc
     ## create legend
     if legend==True:        
         custom_rectangles=[Rectangle((0.2,0.2,0.2),0.2,0.2,color=v) for v in marker_colors]
-        axs.legend(custom_rectangles,list_name_model);
+        axs.legend(custom_rectangles,list_name_model)
+
+    ### set x ticks labels
+    if xticklabels!=None:
+        axs.set_xticklabels(xticklabels)
+    
+    ## set yticks labels
+    if yticklabels!=None:
+        axs.set_yticklabels(yticklabels)
+
     plt.tight_layout()
-    return None
+
+    if return_figure==True:
+        plt.close(fig)
+        return fig
+    else:
+        return None
 
