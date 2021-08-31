@@ -2,5 +2,6 @@
 setup.cfg
 setup.py
 gascoigne\__init__.py
+gascoigne\bpower.py
 gascoigne\regplot.py
 gascoigne\textdriller.py

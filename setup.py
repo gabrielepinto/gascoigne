@@ -8,7 +8,8 @@ setup(
   author = 'Gabriele Pinto',                   # Type in your name
   author_email = 'gabriele.pinto@uniroma1.it',      # Type in your E-Mail
   url = 'https://github.com/gabrielepinto/gascoigne',   # Provide either the link to your github or to your website
-  download_url = 'https://github.com/gabrielepinto/gascoigne/archive/refs/tags/1.5.tar.gz',    # I explain this later on
+  
+  download_url = 'https://github.com/gabrielepinto/gascoigne/archive/refs/tags/1.6.tar.gz',    # I explain this later on
   keywords = ['coefficient plot', 'regression coefficient', 'coeffplot',"regression coefficient plot"],   # Keywords that define your package best
   install_requires=[            # I get to this in a second
 'matplotlib',
