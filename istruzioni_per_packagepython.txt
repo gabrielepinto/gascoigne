@@ -17,7 +17,7 @@ how to update ?
 3) sync folder with github
 ### now we are sync with github, we need to sync with pypy
 4) go to github and open the project 
-5) click on the right on "releases", then on "ediT2
+5) click on the right on "releases", then on "edit"
 6) click on "update release"
 7) go to source code and copy link localiton tar.gz
 https://github.com/gabrielepinto/gascoigne/archive/refs/tags/v.1.tar.gz
@@ -27,8 +27,9 @@ https://github.com/gabrielepinto/gascoigne/archive/refs/tags/v.1.tar.gz
 9) open the anaconda
 10) go to the folder
 11) type: python setup.py sdist
+11b) remember to change the version name in the setup file (such as 1.5,1.6..etcc)
 12 type:  python -m twine upload dist/*
-(alternatively python-m twine upload dist/gascoigne-1.1.tar.gz
-insert username *** and password
+(alternatively python -m twine upload dist/gascoigne-1.6.tar.gz
+insert username gabrielepinto and password
 12) to install the new version pip install packagenam==version (or in alternative uninstall and re-install
 13) delete older version on pipy to avoid downloading older version

@@ -86,7 +86,7 @@ def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Interc
     
     data.reset_index(inplace=True,drop=True)
     if selected_var!=None:
-        sorter=[selected_var]
+        sorter=selected_var
         data.drop(data.loc[~data["varname"].isin(sorter),:].index,axis=0,inplace=True)
         # Create the dictionary that defines the order for sorting
         sorterIndex = dict(zip(sorter, range(len(sorter))))
