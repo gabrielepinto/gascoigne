@@ -39,7 +39,7 @@ def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Interc
     
     intercept_name: name of the intercept
     fontsize: fontsize of the text in the figures
-    colors: a unique or a list of colors for bar and markers
+    colors: a unique or a list of colors for bar and markers. if unique, pass it trough a list (e.g. [red])
     marker_colors: a list of colors for markers
     bar_colors: a list of colors for bar
     selected_var:a list-array with the names of the specific variables you want to show or the order
@@ -149,7 +149,7 @@ def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Interc
     std_bar_colors=['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928'] 
 
     if colors!="standard":
-        if len([colors])==1:
+        if len(colors)==1:
             marker_colors=[colors]*len(list_of_model)
             bar_colors=[colors]*len(list_of_model)
         else:
@@ -157,13 +157,13 @@ def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Interc
             bar_colors=colors
 
     if marker_colors!="standard":
-        if len([marker_colors])==1:
+        if len(marker_colors)==1:
             marker_colors=[marker_colors]*len(list_of_model)
     else:
         marker_colors=std_marker_colors
         
     if bar_colors!="standard":
-        if len([bar_colors])==1:
+        if len(bar_colors)==1:
             bar_colors=[bar_colors]*len(list_of_model)
     else:
         bar_colors=std_bar_colors
