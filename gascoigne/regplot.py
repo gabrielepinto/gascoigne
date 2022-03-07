@@ -30,7 +30,7 @@ def create_df(list_of_models,model_names="none"):
 
 
 
-def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Intercept",fontsize=12,colors="standard",marker_colors="standard",bar_colors="standard",linewidth=2,markersize=8,marker="^",legend=True,smf=True,orientation="horizontal",
+def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Intercept",fontsize=12,colors="standard",marker_colors="standard",bar_colors="standard",linewidth=2,markersize=8,marker="^",legend=True,legend_position="best",smf=True,orientation="horizontal",
               axis_title=None,figsize=None,xlabel="variables",ylabel="coefficient",manual_axs_lims=None,xticklabels=None,yticklabels=None,return_figure=False):
 
     """
@@ -49,6 +49,7 @@ def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Interc
     marker: type of marker (triangle, point, etc... see: https://matplotlib.org/3.3.3/api/markers_api.html)
     color_line: a unqque or a list of colors for bar
     legend: show legend or not
+    legend_position: legend position, default is "best", available are:
     axis_title: title of the figure, default is none
     figsize: a tuple (xsize,ysize) for editing the size of the figure. default is 5,10
     xlabel: label of x-axis
@@ -229,7 +230,7 @@ def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Interc
     ## create legend
     if legend==True:        
         custom_rectangles=[Rectangle((0.2,0.2,0.2),0.2,0.2,color=v) for v in marker_colors]
-        axs.legend(custom_rectangles,list_name_model)
+        axs.legend(custom_rectangles,list_name_model,loc=legend_position)
 
     ### set x ticks labels
     if xticklabels!=None:
