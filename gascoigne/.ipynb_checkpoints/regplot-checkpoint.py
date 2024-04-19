@@ -23,15 +23,15 @@ def create_df(list_of_models,model_names="none"):
         coef_df.columns=["varname","coef","std_err","t","pvalue","0.25","0.975"]
         coef_df["err"]=coef_df["coef"].apply(lambda x:float(x))-coef_df["0.25"].apply(lambda x: float(x))
         coef_df["model"]=model_names[i]
-        data=pd.concat([coef_df,data])
+        data=data.append(coef_df)
         i+=1
     return data
 
 
 
 
-def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Intercept",fontsize=12,colors="standard",marker_colors="standard",bar_colors="standard",linewidth=2,markersize=8,marker="^",legend=True,legend_position="best",smf=True,orientation="horizontal",
-              axis_title=None,figsize=None,xlabel="variables",ylabel="coefficient",manual_axs_lims=None,xticklabels=None,yticklabels=None,return_figure=False):
+def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Intercept",fontsize=12,colors="standard",marker_colors="standard",bar_colors="standard",linewidth=2,markersize=8,marker="^",legend=True,smf=True,orientation="horizontal",
+              axis_title=None,figsize=None,xlabel="variables",ylabel="coefficient"):
 
     """
     data: a pandas dataframe with four columns [coef,err,model,varname]
@@ -39,7 +39,7 @@ def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Interc
     
     intercept_name: name of the intercept
     fontsize: fontsize of the text in the figures
-    colors: a unique or a list of colors for bar and markers. if unique, pass it trough a list (e.g. [red])
+    colors: a unique or a list of colors for bar and markers
     marker_colors: a list of colors for markers
     bar_colors: a list of colors for bar
     selected_var:a list-array with the names of the specific variables you want to show or the order
@@ -49,15 +49,10 @@ def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Interc
     marker: type of marker (triangle, point, etc... see: https://matplotlib.org/3.3.3/api/markers_api.html)
     color_line: a unqque or a list of colors for bar
     legend: show legend or not
-    legend_position: legend position, default is "best", available are:
     axis_title: title of the figure, default is none
     figsize: a tuple (xsize,ysize) for editing the size of the figure. default is 5,10
     xlabel: label of x-axis
     ylabel: label of y-axis
-    manual_axs_lims: list of array limits
-    xticklabels: list of xticklabels
-    yticklabels: list of yticklabels
-    return_figure: wether showing directly the fiure or only returning the object
     """
 
 
@@ -112,13 +107,10 @@ def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Interc
 
 
     ### give a 10% margin to axis limits of the plot
-    
+    data["coef"]+data["err"]
     ax_min=np.round((data["coef"]-data["err"]).min()*1.10,4)
     ax_max=np.round((data["coef"]+data["err"]).max()*1.10,4)
-
-    if manual_axs_lims!=None:
-        ax_min=manual_axs_lims[0]
-        ax_max=manual_axs_lims[1]
+    
     
     ### set label name
     axs.set_xlabel(xlabel)
@@ -150,7 +142,7 @@ def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Interc
     std_bar_colors=['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928'] 
 
     if colors!="standard":
-        if len(colors)==1:
+        if len([colors])==1:
             marker_colors=[colors]*len(list_of_model)
             bar_colors=[colors]*len(list_of_model)
         else:
@@ -158,13 +150,13 @@ def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Interc
             bar_colors=colors
 
     if marker_colors!="standard":
-        if len(marker_colors)==1:
+        if len([marker_colors])==1:
             marker_colors=[marker_colors]*len(list_of_model)
     else:
         marker_colors=std_marker_colors
         
     if bar_colors!="standard":
-        if len(bar_colors)==1:
+        if len([bar_colors])==1:
             bar_colors=[bar_colors]*len(list_of_model)
     else:
         bar_colors=std_bar_colors
@@ -230,21 +222,7 @@ def coeff_plot(data,selected_var=None,show_intercept=True,intercept_name="Interc
     ## create legend
     if legend==True:        
         custom_rectangles=[Rectangle((0.2,0.2,0.2),0.2,0.2,color=v) for v in marker_colors]
-        axs.legend(custom_rectangles,list_name_model,loc=legend_position)
-
-    ### set x ticks labels
-    if xticklabels!=None:
-        axs.set_xticklabels(xticklabels)
-    
-    ## set yticks labels
-    if yticklabels!=None:
-        axs.set_yticklabels(yticklabels)
-
+        axs.legend(custom_rectangles,list_name_model);
     plt.tight_layout()
-
-    if return_figure==True:
-        plt.close(fig)
-        return fig
-    else:
-        return None
+    return None
 
